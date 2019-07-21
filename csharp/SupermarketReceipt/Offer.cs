@@ -5,13 +5,11 @@ namespace SupermarketReceipt
     public abstract class Offer
     {
         public Product Product { get; }
-        public double Argument { get; }
 
         protected int NumberOfItems = 1;
 
-        public Offer(Product product, double argument)
+        protected Offer(Product product)
         {
-            this.Argument = argument;
             this.Product = product;
         }
 
@@ -22,7 +20,7 @@ namespace SupermarketReceipt
     public class ThreeForTwo : Offer
     {
         protected new const int x = 3;
-        public ThreeForTwo(Product product, double argument) : base(product, argument)
+        public ThreeForTwo(Product product, double argument) : base(product)
         {
         }
 
@@ -45,22 +43,27 @@ namespace SupermarketReceipt
 
     public class TenPercentDiscountOffer : Offer
     {
-        public TenPercentDiscountOffer(Product product, double argument) : base(product, argument)
+        public double Percentage {get;}
+
+        public TenPercentDiscountOffer(Product product, double percentage) : base(product)
         {
+            Percentage = percentage;
         }
 
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
-            return new Discount(Product, Argument + "% off", quantity * unitPrice * Argument / 100.0);
+            return new Discount(Product, Percentage + "% off", quantity * unitPrice * Percentage / 100.0);
         }
     }
 
     public class NumberOfItemsForAmountOffer : Offer
     {
+        public double Amount { get; }
 
-        public NumberOfItemsForAmountOffer(Product product, int numberOfItems, double argument) : base(product, argument)
+        public NumberOfItemsForAmountOffer(Product product, int numberOfItems, double amount) : base(product)
         {
-            this.NumberOfItems = numberOfItems;
+            NumberOfItems = numberOfItems;
+            Amount = amount;
         }
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
@@ -70,9 +73,9 @@ namespace SupermarketReceipt
 
             if (quantityAsInt >= NumberOfItems)
             {
-                var total = (Argument * numberOfXs + quantityAsInt % NumberOfItems * unitPrice);
+                var total = (Amount * numberOfXs + quantityAsInt % NumberOfItems * unitPrice);
                 var discountTotal = unitPrice * quantity - total;
-                discount = new Discount(Product, NumberOfItems + " for " + Argument, discountTotal);
+                discount = new Discount(Product, NumberOfItems + " for " + Amount, discountTotal);
             }
             
             return discount;
