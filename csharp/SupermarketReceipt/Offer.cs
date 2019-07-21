@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public virtual  Discount GetDiscount(Product p, Offer offer, double quantity, double unitPrice) {throw new NotImplementedException();}
+        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice) {throw new NotImplementedException();}
 
     }
 
@@ -38,9 +38,9 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, Offer offer, double quantity, double unitPrice)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
         {
-            return new Discount(p, offer.Argument + "% off", quantity * unitPrice * offer.Argument / 100.0);
+            return new Discount(p, Argument + "% off", quantity * unitPrice * Argument / 100.0);
         }
     }
 
