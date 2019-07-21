@@ -54,10 +54,6 @@ namespace SupermarketReceipt
                     {
                         discount = offer.GetDiscount(product, quantity, unitPrice);
                     }
-                    if (offer.GetType() == typeof(FiveForAmountOffer))
-                    {
-                        x = 5;
-                    }
                     if (offer.GetType() == typeof(ThreeForTwo))
                     {
                         discount = offer.GetDiscount(product, quantity, unitPrice, x);
@@ -68,7 +64,7 @@ namespace SupermarketReceipt
                     }
                     if (offer.GetType() == typeof(FiveForAmountOffer))
                     {
-                        discount = offer.GetDiscount(product, quantity, unitPrice, x);
+                        discount = offer.GetDiscount(product, quantity, unitPrice, 5);
                     }
                     if (discount != null)
                         receipt.AddDiscount(discount);
