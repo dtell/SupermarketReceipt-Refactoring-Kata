@@ -1,6 +1,8 @@
+using System;
+
 namespace SupermarketReceipt
 {
-    public class Offer
+    public abstract class Offer
     {
         public Product Product { get; }
         public double Argument { get; }
@@ -10,6 +12,8 @@ namespace SupermarketReceipt
             this.Argument = argument;
             this.Product = product;
         }
+
+        public virtual  Discount GetDiscount(Product p, Offer offer, double quantity, double unitPrice) {throw new NotImplementedException();}
 
     }
 
@@ -32,6 +36,11 @@ namespace SupermarketReceipt
     {
         public TenPercentDiscountOffer(Product product, double argument) : base(product, argument)
         {
+        }
+
+        public override Discount GetDiscount(Product p, Offer offer, double quantity, double unitPrice)
+        {
+            return new Discount(p, offer.Argument + "% off", quantity * unitPrice * offer.Argument / 100.0);
         }
     }
 

@@ -74,7 +74,7 @@ namespace SupermarketReceipt
                     }
                     if (offer.GetType() == typeof(TenPercentDiscountOffer))
                     {
-                        discount = new Discount(p, offer.Argument + "% off", quantity * unitPrice * offer.Argument / 100.0);
+                        discount = offer.GetDiscount(p, offer, quantity, unitPrice);
                     }
                     if (offer.GetType() == typeof(FiveForAmountOffer) && quantityAsInt >= 5)
                     {
@@ -87,6 +87,7 @@ namespace SupermarketReceipt
 
             }
         }
+
     }
 
 }
