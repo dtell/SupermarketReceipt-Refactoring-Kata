@@ -27,6 +27,7 @@ namespace SupermarketReceipt
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
+            x = 3;
             if (x != null)
             {
                 var numberOfXs = quantityAsInt / x.Value;
@@ -87,6 +88,7 @@ namespace SupermarketReceipt
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
+            x = 5;
             var numberOfXs = quantityAsInt / x;
 
             if (numberOfXs.HasValue && quantityAsInt >= 5)
