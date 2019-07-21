@@ -14,9 +14,9 @@ namespace SupermarketReceipt
             this._catalog = catalog;
         }
 
-        public void AddSpecialOffer(SpecialOfferType offerType, Product product, double argument)
+        public void AddSpecialOffer(Offer offer)
         {
-            this._offers[product] = new Offer(offerType, product, argument);
+            this._offers[offer.Product] = offer;
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
