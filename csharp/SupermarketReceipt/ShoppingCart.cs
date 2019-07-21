@@ -46,7 +46,7 @@ namespace SupermarketReceipt
                     var unitPrice = catalog.GetUnitPrice(p);
                     Discount discount = null;
                     var x = 1;
-                    if (offer.OfferType == SpecialOfferType.ThreeForTwo)
+                    if (offer.GetType() == typeof(ThreeForTwo))
                     {
                         x = 3;
 

@@ -20,7 +20,12 @@ namespace SupermarketReceipt
 
     }
 
-
+    public class ThreeForTwo : Offer
+    {
+        public ThreeForTwo(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        {
+        }
+    }
 
 
 }

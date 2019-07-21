@@ -62,7 +62,7 @@ namespace SupermarketReceipt
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
-            _teller.AddSpecialOffer(new Offer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush)));
+            _teller.AddSpecialOffer(new ThreeForTwo(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush)));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -75,7 +75,7 @@ namespace SupermarketReceipt
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
-            _teller.AddSpecialOffer(new Offer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush)));
+            _teller.AddSpecialOffer(new ThreeForTwo(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush)));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
