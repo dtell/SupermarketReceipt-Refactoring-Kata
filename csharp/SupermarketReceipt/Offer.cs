@@ -6,7 +6,7 @@ namespace SupermarketReceipt
     {
         public Product Product { get; }
 
-        protected int NumberOfItems = 1;
+        protected int NumberOfItemsToMeetCondition = 1;
 
         protected Offer(Product product)
         {
@@ -41,11 +41,11 @@ namespace SupermarketReceipt
         }
     }
 
-    public class TenPercentDiscountOffer : Offer
+    public class PercentageDiscountOffer : Offer
     {
         public double Percentage {get;}
 
-        public TenPercentDiscountOffer(Product product, double percentage) : base(product)
+        public PercentageDiscountOffer(Product product, double percentage) : base(product)
         {
             Percentage = percentage;
         }
@@ -60,22 +60,25 @@ namespace SupermarketReceipt
     {
         public double Amount { get; }
 
-        public NumberOfItemsForAmountOffer(Product product, int numberOfItems, double amount) : base(product)
+        public NumberOfItemsForAmountOffer(Product product, int numberOfItemsToMeetCondition, double amount) : base(product)
         {
-            NumberOfItems = numberOfItems;
+            NumberOfItemsToMeetCondition = numberOfItemsToMeetCondition;
             Amount = amount;
         }
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            var numberOfXs = quantityAsInt / NumberOfItems;
+            var numberOfTimesOfferConditionHasBeenMet = quantityAsInt / NumberOfItemsToMeetCondition;
 
-            if (quantityAsInt >= NumberOfItems)
+            if (quantityAsInt >= NumberOfItemsToMeetCondition)
             {
-                var total = (Amount * numberOfXs + quantityAsInt % NumberOfItems * unitPrice);
-                var discountTotal = unitPrice * quantity - total;
-                discount = new Discount(Product, NumberOfItems + " for " + Amount, discountTotal);
+                var priceForItemsCoveredByOffer = Amount * numberOfTimesOfferConditionHasBeenMet;
+                var priceForAdditionalItems = quantityAsInt % NumberOfItemsToMeetCondition * unitPrice;
+                var priceAfterDiscount = priceForItemsCoveredByOffer + priceForAdditionalItems;
+                var fullPrice = unitPrice * quantity;
+                var discountTotal = fullPrice - priceAfterDiscount;
+                discount = new Discount(Product, NumberOfItemsToMeetCondition + " for " + Amount, discountTotal);
             }
             
             return discount;
