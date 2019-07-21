@@ -36,14 +36,13 @@ namespace SupermarketReceipt
 
         public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
-            foreach (var p in _productQuantities.Keys)
+            foreach (var product in _productQuantities.Keys)
             {
-                var quantity = _productQuantities[p];
-                var quantityAsInt = (int)quantity;
-                if (offers.ContainsKey(p))
+                var quantity = _productQuantities[product];
+                if (offers.ContainsKey(product))
                 {
-                    var offer = offers[p];
-                    var unitPrice = catalog.GetUnitPrice(p);
+                    var offer = offers[product];
+                    var unitPrice = catalog.GetUnitPrice(product);
                     Discount discount = null;
                     var x = 1;
                     if (offer.GetType() == typeof(ThreeForTwo))
@@ -53,24 +52,23 @@ namespace SupermarketReceipt
                     }
                     else if (offer.GetType() == typeof(TwoForAmountOffer))
                     {
-                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt);
+                        discount = offer.GetDiscount(product, quantity, unitPrice);
                     }
                     if (offer.GetType() == typeof(FiveForAmountOffer))
                     {
                         x = 5;
                     }
-                    var numberOfXs = quantityAsInt / x;
                     if (offer.GetType() == typeof(ThreeForTwo))
                     {
-                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt, numberOfXs);
+                        discount = offer.GetDiscount(product, quantity, unitPrice, x);
                     }
                     if (offer.GetType() == typeof(TenPercentDiscountOffer))
                     {
-                        discount = offer.GetDiscount(p, quantity, unitPrice);
+                        discount = offer.GetDiscount(product, quantity, unitPrice);
                     }
                     if (offer.GetType() == typeof(FiveForAmountOffer))
                     {
-                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt, numberOfXs, x);
+                        discount = offer.GetDiscount(product, quantity, unitPrice, x);
                     }
                     if (discount != null)
                         receipt.AddDiscount(discount);

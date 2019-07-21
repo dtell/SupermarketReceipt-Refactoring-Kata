@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null, int? numberOfXs = null, int? x = null) {throw new NotImplementedException();}
+        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null) {throw new NotImplementedException();}
 
     }
 
@@ -23,13 +23,19 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt, int? numberOfXs, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
         {
             Discount discount = null;
-            if (quantityAsInt.HasValue && numberOfXs.HasValue && quantityAsInt.Value > 2)
+            var quantityAsInt = (int)quantity;
+            if (x != null)
             {
-                var discountAmount = quantity * unitPrice - ((numberOfXs.Value * 2 * unitPrice) + quantityAsInt.Value % 3 * unitPrice);
-                discount = new Discount(p, "3 for 2", discountAmount);
+                var numberOfXs = quantityAsInt / x.Value;
+
+                if (quantityAsInt > 2)
+                {
+                    var discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
+                    discount = new Discount(p, "3 for 2", discountAmount);
+                }
             }
 
             return discount;
@@ -43,12 +49,15 @@ namespace SupermarketReceipt
 
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt, int? numberOfXs = null, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
         {
             x = 2;
-            if (quantityAsInt.HasValue && quantityAsInt.Value >= 2)
+            var quantityAsInt = (int)quantity;
+            var numberOfXs = quantityAsInt / x;
+
+            if (quantityAsInt >= 2)
             {
-                double total = Argument * quantityAsInt.Value / x.Value + quantityAsInt.Value % 2 * unitPrice;
+                double total = Argument * quantityAsInt / x.Value + quantityAsInt % 2 * unitPrice;
                 double discountN = unitPrice * quantity - total;
                 return new Discount(p, "2 for " + Argument, discountN);
             }
@@ -63,7 +72,7 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null, int? numberOfXs = null, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
         {
             return new Discount(p, Argument + "% off", quantity * unitPrice * Argument / 100.0);
         }
@@ -74,13 +83,15 @@ namespace SupermarketReceipt
         public FiveForAmountOffer(Product product, double argument) : base(product, argument)
         {
         }
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice,  int? quantityAsInt = null, int? numberOfXs = null, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice,  int? x = null)
         {
             Discount discount = null;
+            var quantityAsInt = (int)quantity;
+            var numberOfXs = quantityAsInt / x;
 
-            if (quantityAsInt.HasValue && numberOfXs.HasValue && quantityAsInt >= 5)
+            if (numberOfXs.HasValue && quantityAsInt >= 5)
             {
-                var discountTotal = unitPrice * quantity - (Argument * numberOfXs.Value + quantityAsInt.Value % 5 * unitPrice);
+                var discountTotal = unitPrice * quantity - (Argument * numberOfXs.Value + quantityAsInt % 5 * unitPrice);
                 discount = new Discount(p, x + " for " + Argument, discountTotal);
             }
             
