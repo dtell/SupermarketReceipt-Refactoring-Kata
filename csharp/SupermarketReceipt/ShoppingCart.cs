@@ -68,10 +68,9 @@ namespace SupermarketReceipt
                     {
                         discount = offer.GetDiscount(p, quantity, unitPrice);
                     }
-                    if (offer.GetType() == typeof(FiveForAmountOffer) && quantityAsInt >= 5)
+                    if (offer.GetType() == typeof(FiveForAmountOffer))
                     {
-                        var discountTotal = unitPrice * quantity - (offer.Argument * numberOfXs + quantityAsInt % 5 * unitPrice);
-                        discount = new Discount(p, x + " for " + offer.Argument, discountTotal);
+                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt, numberOfXs, x);
                     }
                     if (discount != null)
                         receipt.AddDiscount(discount);
