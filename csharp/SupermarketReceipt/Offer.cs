@@ -7,7 +7,7 @@ namespace SupermarketReceipt
         public Product Product { get; }
         public double Argument { get; }
 
-        protected const int x = 1;
+        protected int NumberOfItems = 1;
 
         public Offer(Product product, double argument)
         {
@@ -43,31 +43,6 @@ namespace SupermarketReceipt
         }
     }
 
-    public class TwoForAmountOffer : Offer
-    {
-        protected new const int x = 2;
-        public TwoForAmountOffer(Product product, double argument) : base(product, argument)
-        {
-
-        }
-
-        public override Discount GetDiscount(double quantity, double unitPrice)
-        {
-            Discount discount = null;
-            var quantityAsInt = (int)quantity;
-            var numberOfXs = quantityAsInt / x;
-
-            if (quantityAsInt >= x)
-            {
-                double total = Argument * quantityAsInt / x + quantityAsInt % x * unitPrice;
-                double discountN = unitPrice * quantity - total;
-                discount = new Discount(Product,  x + " for " + Argument, discountN);
-            }
-
-            return discount;
-        }
-    }
-
     public class TenPercentDiscountOffer : Offer
     {
         public TenPercentDiscountOffer(Product product, double argument) : base(product, argument)
@@ -80,24 +55,24 @@ namespace SupermarketReceipt
         }
     }
 
-    public class FiveForAmountOffer : Offer
+    public class NumberOfItemsForAmountOffer : Offer
     {
-        protected new const int x = 5;
 
-        public FiveForAmountOffer(Product product, double argument) : base(product, argument)
+        public NumberOfItemsForAmountOffer(Product product, int numberOfItems, double argument) : base(product, argument)
         {
+            this.NumberOfItems = numberOfItems;
         }
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            var numberOfXs = quantityAsInt / x;
+            var numberOfXs = quantityAsInt / NumberOfItems;
 
-            if (quantityAsInt >= x)
+            if (quantityAsInt >= NumberOfItems)
             {
-                var total = (Argument * numberOfXs + quantityAsInt % x * unitPrice);
+                var total = (Argument * numberOfXs + quantityAsInt % NumberOfItems * unitPrice);
                 var discountTotal = unitPrice * quantity - total;
-                discount = new Discount(Product, x + " for " + Argument, discountTotal);
+                discount = new Discount(Product, NumberOfItems + " for " + Argument, discountTotal);
             }
             
             return discount;

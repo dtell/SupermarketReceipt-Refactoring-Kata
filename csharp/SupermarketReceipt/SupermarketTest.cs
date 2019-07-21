@@ -102,7 +102,7 @@ namespace SupermarketReceipt
         {
             _theCart.AddItem(_cherryTomatoes);
             _theCart.AddItem(_cherryTomatoes);
-            _teller.AddSpecialOffer(new TwoForAmountOffer(_cherryTomatoes, .99));
+            _teller.AddSpecialOffer(new NumberOfItemsForAmountOffer(_cherryTomatoes, 2, .99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -111,7 +111,7 @@ namespace SupermarketReceipt
         public void FiveForY_discount()
         {
             _theCart.AddItemQuantity(_apples, 5);
-            _teller.AddSpecialOffer(new FiveForAmountOffer(_apples, 6.99));
+            _teller.AddSpecialOffer(new NumberOfItemsForAmountOffer(_apples, 5, 6.99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -120,7 +120,7 @@ namespace SupermarketReceipt
         public void FiveForY_discount_withSix()
         {
             _theCart.AddItemQuantity(_apples, 6);
-            _teller.AddSpecialOffer(new FiveForAmountOffer(_apples, 6.99));
+            _teller.AddSpecialOffer(new NumberOfItemsForAmountOffer(_apples, 5, 6.99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -129,7 +129,7 @@ namespace SupermarketReceipt
         public void FiveForY_discount_withSixteen()
         {
             _theCart.AddItemQuantity(_apples, 16);
-            _teller.AddSpecialOffer(new FiveForAmountOffer( _apples, 6.99));
+            _teller.AddSpecialOffer(new NumberOfItemsForAmountOffer( _apples, 5, 6.99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -138,7 +138,7 @@ namespace SupermarketReceipt
         public void FiveForY_discount_withFour()
         {
             _theCart.AddItemQuantity(_apples, 4);
-            _teller.AddSpecialOffer(new FiveForAmountOffer(_apples, 6.99));
+            _teller.AddSpecialOffer(new NumberOfItemsForAmountOffer(_apples, 5, 6.99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
