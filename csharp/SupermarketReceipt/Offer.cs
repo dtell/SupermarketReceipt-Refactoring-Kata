@@ -56,9 +56,9 @@ namespace SupermarketReceipt
             var quantityAsInt = (int)quantity;
             var numberOfXs = quantityAsInt / x;
 
-            if (quantityAsInt >= 2)
+            if (quantityAsInt >= x)
             {
-                double total = Argument * quantityAsInt / x + quantityAsInt % 2 * unitPrice;
+                double total = Argument * quantityAsInt / x + quantityAsInt % x * unitPrice;
                 double discountN = unitPrice * quantity - total;
                 return new Discount(Product, "2 for " + Argument, discountN);
             }
@@ -92,9 +92,9 @@ namespace SupermarketReceipt
             var quantityAsInt = (int)quantity;
             var numberOfXs = quantityAsInt / x;
 
-            if (quantityAsInt >= 5)
+            if (quantityAsInt >= x)
             {
-                var discountTotal = unitPrice * quantity - (Argument * numberOfXs + quantityAsInt % 5 * unitPrice);
+                var discountTotal = unitPrice * quantity - (Argument * numberOfXs + quantityAsInt % x * unitPrice);
                 discount = new Discount(Product, x + " for " + Argument, discountTotal);
             }
             
