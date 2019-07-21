@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public abstract Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null);
+        public abstract Discount GetDiscount(Product p, double quantity, double unitPrice);
 
     }
 
@@ -23,20 +23,17 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            x = 3;
-            if (x != null)
-            {
-                var numberOfXs = quantityAsInt / x.Value;
+            var x = 3;
+            var numberOfXs = quantityAsInt / x;
 
-                if (quantityAsInt > 2)
-                {
-                    var discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
-                    discount = new Discount(p, "3 for 2", discountAmount);
-                }
+            if (quantityAsInt > 2)
+            {
+                var discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
+                discount = new Discount(p, "3 for 2", discountAmount);
             }
 
             return discount;
@@ -50,15 +47,15 @@ namespace SupermarketReceipt
 
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
         {
-            x = 2;
+            var x = 2;
             var quantityAsInt = (int)quantity;
             var numberOfXs = quantityAsInt / x;
 
             if (quantityAsInt >= 2)
             {
-                double total = Argument * quantityAsInt / x.Value + quantityAsInt % 2 * unitPrice;
+                double total = Argument * quantityAsInt / x + quantityAsInt % 2 * unitPrice;
                 double discountN = unitPrice * quantity - total;
                 return new Discount(p, "2 for " + Argument, discountN);
             }
@@ -73,7 +70,7 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
         {
             return new Discount(p, Argument + "% off", quantity * unitPrice * Argument / 100.0);
         }
@@ -84,16 +81,16 @@ namespace SupermarketReceipt
         public FiveForAmountOffer(Product product, double argument) : base(product, argument)
         {
         }
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice,  int? x = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            x = 5;
+            var x = 5;
             var numberOfXs = quantityAsInt / x;
 
-            if (numberOfXs.HasValue && quantityAsInt >= 5)
+            if (quantityAsInt >= 5)
             {
-                var discountTotal = unitPrice * quantity - (Argument * numberOfXs.Value + quantityAsInt % 5 * unitPrice);
+                var discountTotal = unitPrice * quantity - (Argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                 discount = new Discount(p, x + " for " + Argument, discountTotal);
             }
             
