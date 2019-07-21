@@ -7,11 +7,11 @@ namespace SupermarketReceipt
 
     public class Offer
     {
-        public SpecialOfferType OfferType { get; }
+        public SpecialOfferType? OfferType { get; }
         public Product Product { get; }
         public double Argument { get; }
 
-        public Offer(SpecialOfferType offerType, Product product, double argument)
+        public Offer(SpecialOfferType? offerType, Product product, double argument)
         {
             this.OfferType = offerType;
             this.Argument = argument;
@@ -22,14 +22,14 @@ namespace SupermarketReceipt
 
     public class ThreeForTwo : Offer
     {
-        public ThreeForTwo(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        public ThreeForTwo(Product product, double argument) : base(null, product, argument)
         {
         }
     }
 
     public class TwoForAmountOffer : Offer
     {
-        public TwoForAmountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        public TwoForAmountOffer(Product product, double argument) : base(null, product, argument)
         {
 
         }
@@ -37,14 +37,14 @@ namespace SupermarketReceipt
 
     public class TenPercentDiscountOffer : Offer
     {
-        public TenPercentDiscountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        public TenPercentDiscountOffer(Product product, double argument) : base(null, product, argument)
         {
         }
     }
 
     public class FiveForAmountOffer : Offer
     {
-        public FiveForAmountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        public FiveForAmountOffer(Product product, double argument) : base(null, product, argument)
         {
         }
     }
