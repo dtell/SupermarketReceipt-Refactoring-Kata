@@ -44,7 +44,6 @@ namespace SupermarketReceipt
                     var offer = offers[product];
                     var unitPrice = catalog.GetUnitPrice(product);
                     Discount discount = null;
-                    var x = 1;
 
                     if (offer.GetType() == typeof(TwoForAmountOffer))
                     {
