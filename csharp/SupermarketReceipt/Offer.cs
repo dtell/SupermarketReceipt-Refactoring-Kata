@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice) {throw new NotImplementedException();}
+        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null) {throw new NotImplementedException();}
 
     }
 
@@ -30,6 +30,19 @@ namespace SupermarketReceipt
         {
 
         }
+
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt)
+        {
+            var x = 2;
+            if (quantityAsInt.HasValue && quantityAsInt.Value >= 2)
+            {
+                double total = Argument * quantityAsInt.Value / x + quantityAsInt.Value % 2 * unitPrice;
+                double discountN = unitPrice * quantity - total;
+                return new Discount(p, "2 for " + Argument, discountN);
+            }
+
+            return null;
+        }
     }
 
     public class TenPercentDiscountOffer : Offer
@@ -38,7 +51,7 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null)
         {
             return new Discount(p, Argument + "% off", quantity * unitPrice * Argument / 100.0);
         }

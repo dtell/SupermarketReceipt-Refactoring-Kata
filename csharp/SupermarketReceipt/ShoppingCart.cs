@@ -53,14 +53,7 @@ namespace SupermarketReceipt
                     }
                     else if (offer.GetType() == typeof(TwoForAmountOffer))
                     {
-                        x = 2;
-                        if (quantityAsInt >= 2)
-                        {
-                            double total = offer.Argument * quantityAsInt / x + quantityAsInt % 2 * unitPrice;
-                            double discountN = unitPrice * quantity - total;
-                            discount = new Discount(p, "2 for " + offer.Argument, discountN);
-                        }
-
+                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt);
                     }
                     if (offer.GetType() == typeof(FiveForAmountOffer))
                     {
