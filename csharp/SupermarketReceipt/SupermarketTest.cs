@@ -92,7 +92,7 @@ namespace SupermarketReceipt
         public void percent_discount()
         {
             _theCart.AddItem(_rice);
-            _teller.AddSpecialOffer(new Offer(SpecialOfferType.TenPercentDiscount, _rice, 10.0));
+            _teller.AddSpecialOffer(new TenPercentDiscountOffer(SpecialOfferType.TenPercentDiscount, _rice, 10.0));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }

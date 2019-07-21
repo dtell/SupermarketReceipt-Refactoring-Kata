@@ -35,6 +35,13 @@ namespace SupermarketReceipt
         }
     }
 
+    public class TenPercentDiscountOffer : Offer
+    {
+        public TenPercentDiscountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        {
+        }
+    }
+
 
 }
 
