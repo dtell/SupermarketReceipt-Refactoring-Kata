@@ -53,6 +53,7 @@ namespace SupermarketReceipt
 
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
+            Discount discount = null;
             var quantityAsInt = (int)quantity;
             var numberOfXs = quantityAsInt / x;
 
@@ -60,10 +61,10 @@ namespace SupermarketReceipt
             {
                 double total = Argument * quantityAsInt / x + quantityAsInt % x * unitPrice;
                 double discountN = unitPrice * quantity - total;
-                return new Discount(Product, "2 for " + Argument, discountN);
+                discount = new Discount(Product,  x + " for " + Argument, discountN);
             }
 
-            return null;
+            return discount;
         }
     }
 
@@ -94,7 +95,8 @@ namespace SupermarketReceipt
 
             if (quantityAsInt >= x)
             {
-                var discountTotal = unitPrice * quantity - (Argument * numberOfXs + quantityAsInt % x * unitPrice);
+                var total = (Argument * numberOfXs + quantityAsInt % x * unitPrice);
+                var discountTotal = unitPrice * quantity - total;
                 discount = new Discount(Product, x + " for " + Argument, discountTotal);
             }
             
