@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null) {throw new NotImplementedException();}
+        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null, int? numberOfXs = null) {throw new NotImplementedException();}
 
     }
 
@@ -21,6 +21,18 @@ namespace SupermarketReceipt
     {
         public ThreeForTwo(Product product, double argument) : base(product, argument)
         {
+        }
+
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt, int? numberOfXs)
+        {
+            Discount discount = null;
+            if (quantityAsInt.HasValue && numberOfXs.HasValue && quantityAsInt.Value > 2)
+            {
+                var discountAmount = quantity * unitPrice - ((numberOfXs.Value * 2 * unitPrice) + quantityAsInt.Value % 3 * unitPrice);
+                discount = new Discount(p, "3 for 2", discountAmount);
+            }
+
+            return discount;
         }
     }
 
@@ -31,7 +43,7 @@ namespace SupermarketReceipt
 
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt, int? numberOfXs = null)
         {
             var x = 2;
             if (quantityAsInt.HasValue && quantityAsInt.Value >= 2)
@@ -51,7 +63,7 @@ namespace SupermarketReceipt
         {
         }
 
-        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null)
+        public override Discount GetDiscount(Product p, double quantity, double unitPrice, int? quantityAsInt = null, int? numberOfXs = null)
         {
             return new Discount(p, Argument + "% off", quantity * unitPrice * Argument / 100.0);
         }

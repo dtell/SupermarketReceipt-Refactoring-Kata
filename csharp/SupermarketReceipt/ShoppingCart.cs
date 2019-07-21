@@ -60,10 +60,9 @@ namespace SupermarketReceipt
                         x = 5;
                     }
                     var numberOfXs = quantityAsInt / x;
-                    if (offer.GetType() == typeof(ThreeForTwo) && quantityAsInt > 2)
+                    if (offer.GetType() == typeof(ThreeForTwo))
                     {
-                        var discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
-                        discount = new Discount(p, "3 for 2", discountAmount);
+                        discount = offer.GetDiscount(p, quantity, unitPrice, quantityAsInt, numberOfXs);
                     }
                     if (offer.GetType() == typeof(TenPercentDiscountOffer))
                     {
@@ -80,6 +79,7 @@ namespace SupermarketReceipt
 
             }
         }
+
 
     }
 
