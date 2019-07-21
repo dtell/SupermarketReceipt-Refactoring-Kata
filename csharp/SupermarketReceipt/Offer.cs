@@ -7,6 +7,8 @@ namespace SupermarketReceipt
         public Product Product { get; }
         public double Argument { get; }
 
+        protected const int x = 1;
+
         public Offer(Product product, double argument)
         {
             this.Argument = argument;
@@ -19,6 +21,7 @@ namespace SupermarketReceipt
 
     public class ThreeForTwo : Offer
     {
+        protected new const int x = 3;
         public ThreeForTwo(Product product, double argument) : base(product, argument)
         {
         }
@@ -27,7 +30,7 @@ namespace SupermarketReceipt
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            var x = 3;
+
             var numberOfXs = quantityAsInt / x;
 
             if (quantityAsInt > 2)
@@ -42,6 +45,7 @@ namespace SupermarketReceipt
 
     public class TwoForAmountOffer : Offer
     {
+        protected new const int x = 2;
         public TwoForAmountOffer(Product product, double argument) : base(product, argument)
         {
 
@@ -49,7 +53,6 @@ namespace SupermarketReceipt
 
         public override Discount GetDiscount(double quantity, double unitPrice)
         {
-            var x = 2;
             var quantityAsInt = (int)quantity;
             var numberOfXs = quantityAsInt / x;
 
@@ -78,6 +81,8 @@ namespace SupermarketReceipt
 
     public class FiveForAmountOffer : Offer
     {
+        protected new const int x = 5;
+
         public FiveForAmountOffer(Product product, double argument) : base(product, argument)
         {
         }
@@ -85,7 +90,6 @@ namespace SupermarketReceipt
         {
             Discount discount = null;
             var quantityAsInt = (int)quantity;
-            var x = 5;
             var numberOfXs = quantityAsInt / x;
 
             if (quantityAsInt >= 5)
