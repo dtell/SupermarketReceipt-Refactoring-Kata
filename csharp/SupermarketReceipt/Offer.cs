@@ -27,6 +27,14 @@ namespace SupermarketReceipt
         }
     }
 
+    public class TwoForAmountOffer : Offer
+    {
+        public TwoForAmountOffer(SpecialOfferType offerType, Product product, double argument) : base(offerType, product, argument)
+        {
+
+        }
+    }
+
 
 }
 

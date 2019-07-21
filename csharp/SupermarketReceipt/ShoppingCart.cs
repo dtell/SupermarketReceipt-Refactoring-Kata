@@ -51,7 +51,7 @@ namespace SupermarketReceipt
                         x = 3;
 
                     }
-                    else if (offer.OfferType == SpecialOfferType.TwoForAmount)
+                    else if (offer.GetType() == typeof(TwoForAmountOffer))
                     {
                         x = 2;
                         if (quantityAsInt >= 2)

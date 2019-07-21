@@ -102,7 +102,7 @@ namespace SupermarketReceipt
         {
             _theCart.AddItem(_cherryTomatoes);
             _theCart.AddItem(_cherryTomatoes);
-            _teller.AddSpecialOffer(new Offer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99));
+            _teller.AddSpecialOffer(new TwoForAmountOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99));
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             Approvals.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
@@ -144,4 +144,6 @@ namespace SupermarketReceipt
         }
 
     }
+
+
 }
