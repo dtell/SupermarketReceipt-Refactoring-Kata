@@ -13,7 +13,7 @@ namespace SupermarketReceipt
             this.Product = product;
         }
 
-        public virtual  Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null) {throw new NotImplementedException();}
+        public abstract Discount GetDiscount(Product p, double quantity, double unitPrice, int? x = null);
 
     }
 
