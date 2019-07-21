@@ -45,18 +45,14 @@ namespace SupermarketReceipt
                     var unitPrice = catalog.GetUnitPrice(product);
                     Discount discount = null;
                     var x = 1;
-                    if (offer.GetType() == typeof(ThreeForTwo))
-                    {
-                        x = 3;
 
-                    }
-                    else if (offer.GetType() == typeof(TwoForAmountOffer))
+                    if (offer.GetType() == typeof(TwoForAmountOffer))
                     {
                         discount = offer.GetDiscount(product, quantity, unitPrice);
                     }
                     if (offer.GetType() == typeof(ThreeForTwo))
                     {
-                        discount = offer.GetDiscount(product, quantity, unitPrice, x);
+                        discount = offer.GetDiscount(product, quantity, unitPrice, 3);
                     }
                     if (offer.GetType() == typeof(TenPercentDiscountOffer))
                     {
