@@ -8,6 +8,11 @@ namespace SupermarketReceipt
         private readonly List<ProductQuantity> _items = new List<ProductQuantity>();
         private readonly Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
 
+        public Dictionary<Product, double> ProductQuantities
+        {
+            get { return _productQuantities; }
+        }
+
 
         public List<ProductQuantity> GetItems()
         {
@@ -33,27 +38,6 @@ namespace SupermarketReceipt
                 _productQuantities.Add(product, quantity);
             }
         }
-
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
-        {
-            foreach (var product in _productQuantities.Keys)
-            {
-                var quantity = _productQuantities[product];
-                if (offers.ContainsKey(product))
-                {
-                    var offer = offers[product];
-                    var unitPrice = catalog.GetUnitPrice(product);
-
-                    var discount = offer.GetDiscount(quantity, unitPrice);
-
-                    if (discount != null)
-                        receipt.AddDiscount(discount);
-                }
-
-            }
-        }
-
-
     }
 
 }

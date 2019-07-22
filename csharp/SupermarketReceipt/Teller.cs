@@ -30,7 +30,7 @@ namespace SupermarketReceipt
                 var price = quantity * unitPrice;
                 receipt.AddProduct(p, quantity, unitPrice, price);
             }
-            theCart.HandleOffers(receipt, this._offers, this._catalog);
+            receipt.HandleOffers(this._offers, this._catalog, theCart);
 
             return receipt;
         }

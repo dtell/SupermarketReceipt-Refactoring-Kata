@@ -40,6 +40,25 @@ namespace SupermarketReceipt
         {
             return _discounts;
         }
+
+        public void HandleOffers(Dictionary<Product, Offer> offers, SupermarketCatalog catalog, ShoppingCart shoppingCart)
+        {
+            foreach (var product in shoppingCart.ProductQuantities.Keys)
+            {
+                var quantity = shoppingCart.ProductQuantities[product];
+                if (offers.ContainsKey(product))
+                {
+                    var offer = offers[product];
+                    var unitPrice = catalog.GetUnitPrice(product);
+
+                    var discount = offer.GetDiscount(quantity, unitPrice);
+
+                    if (discount != null)
+                        this.AddDiscount(discount);
+                }
+
+            }
+        }
     }
 
     public class ReceiptItem
